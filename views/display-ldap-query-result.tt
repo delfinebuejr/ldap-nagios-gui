@@ -1,0 +1,23 @@
+<div>
+<table border='1' cellpadding='3'>
+    
+    <tr> <td> First Name    : </td> <td> <% fname %> </td> </tr>
+    <tr> <td> Last Name     : </td> <td> <% lname %> </td> </tr>
+    <tr> <td> Email         : </td> <td> <% email %> </td> </tr>
+    <tr> <td> Contact Group : </td> <td> <% contactGroup %> </td> </tr>
+    <tr> <td> Contact Type  : </td> <td> <% contactType %> </td> </tr>
+   
+</table>
+
+<form action='/add_contact'>
+
+    <input type='submit' name='add' value='add' >
+    <input type='hidden' name='fname' value='<% fname %>'>
+    <input type='hidden' name='lname' value='<% lname %>'>
+    <input type='hidden' name='email' value='<% email %>' >
+    <input type='hidden' name='contactGroup' value='<% contactGroup %>' >
+    <input type='hidden' name='contactType' value='<% contactType %>' >
+
+</form>
+
+</div>

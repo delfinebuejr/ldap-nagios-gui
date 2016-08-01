@@ -1,0 +1,6 @@
+<form action='/ldapquery'>
+    <h1> Enter Username </h1>
+    <input type='text' name='username' value='[enter username]'>
+    <input type='submit' name='submit' value='query'>
+    <hr>
+</form>
