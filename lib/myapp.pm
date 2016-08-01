@@ -63,7 +63,16 @@ get '/add_contact' => require_role Admins => sub {
 
     my $cfg = new Config::Simple('../ldapnagios.cfg');
 
-    my $svn_local_workspace = $cfg->param('');
+    my $configFile = $cfg->param('configFile');
+    my $objectType = $cfg->param('objectType');
+
+    my $svn_local_workspace = $cfg->param('svn_local_workspace');
+    my $svn_url = $cfg->param('svn_url');
+#    my $svn_username = $cfg->param('svn_username');
+#    my $svn_password = $cfg->param('svn_password');
+
+
+   debug("svn_local_workspace: $svn_local_workspace");
 
     my $contact = NagiosContact->new({
                                    fname => request->param('fname'),
@@ -105,10 +114,15 @@ get '/add_contact' => require_role Admins => sub {
 
     return "Successfully updated $svn_local_workspace/$configFile";
 
-}
+};
 
 sub simple_prompt {
     my ($cred, $realm, $default_username, $may_save, $pool) = @_;
+
+    my $cfg = new Config::Simple->new('../ldapnagios.cfg');
+
+    my $svn_username = $cfg->param('svn_username');
+    my $svn_password = $cfg->param('svn_password');
 
     chomp($svn_username);
     $cred->username($svn_username);
