@@ -1,0 +1,9 @@
+<h1> Displaying Objects found at <% target_config  %> </h1>
+
+
+ 
+    <% FOREACH object=objects%>
+    <><% object.type %>
+    <%- END %>
+
+

@@ -1,0 +1,18 @@
+<h1> List Object From A Target Nagios Config File </h1>
+
+<form>
+    SVN URL: <input type='text' name='svnurl' value="<% svnurl %>">
+    Object Type: <input type='text' name='objectType' value="<% objtype %>">
+    <% IF sw_select %>
+        <select>   
+            <% FOREACH item IN select_options %>
+                <option value="<% item.name %>"> <% item.name %> </options>
+            <% END %>
+        </select>
+    <% END %>
+    <input type='submit'>
+    <hr>
+    format : http://svn-server/svn/repo/target_folder
+    <br>--you cannot target a specific file for checkout
+    <br>--strictly no IP address on the URL
+</form>

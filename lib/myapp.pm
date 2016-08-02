@@ -20,12 +20,18 @@ get '/ldapnagios' => require_role Admins => sub {
     $counter++;
     debug("Counter: $counter");
     session( 'cnt' => $counter );
-    my $out = session('cnt');
-    
-    template 'ldap-nagios';
+#   my $out = session('cnt');
+
+    my $logged_in_user = session('logged_in_user');
+             
+    template 'ldap-nagios', {
+                              'logged_in_user' => $logged_in_user
+                            };
 };
 
 get '/ldapquery' => require_role Admins => sub {
+
+    my $logged_in_user = session('logged_in_user');
 
     my $targetUser = request->param('username');      # catch $env variables
     my $cfg = new Config::Simple('../ldapnagios.cfg');
@@ -34,25 +40,19 @@ get '/ldapquery' => require_role Admins => sub {
     my $ldapUserBase = $cfg->param('ldapUserBase');
     my $ldapGroupBase = $cfg->param('ldapGroupBase');
 
-    debug("targetUser: $targetUser");
-    debug("connstring: $connstring");
-    debug("ldapUserBase: $ldapUserBase");
-    debug("ldapGroupBase: $ldapGroupBase");
-
     my $objldapuser = LDAPuser->new;
     $objldapuser->search_user( $targetUser, $connstring, $ldapUserBase, $ldapGroupBase );
 
-    debug( Dumper($objldapuser));
-
     if ($objldapuser->get_dn) {
     
-        template 'display-ldap-query-result', {
-            'fname' => $objldapuser->get_fname,
-            'lname' => $objldapuser->get_lname,
-            'email' => $objldapuser->get_email,
-            'contactGroup' => 'testGroup',
-            'contactType' => 'testType',
-        };
+        template 'display-ldap-query-result', { 
+                                                'logged_in_user' => $logged_in_user,
+                                                'fname' => $objldapuser->get_fname,
+                                                'lname' => $objldapuser->get_lname,
+                                                'email' => $objldapuser->get_email,
+                                                'contactGroup' => 'testGroup',
+                                                'contactType' => 'testType',
+                                              };
     }
     else{
         return "$targetUser not found in LDAP";
@@ -61,18 +61,17 @@ get '/ldapquery' => require_role Admins => sub {
 
 get '/add_contact' => require_role Admins => sub {
 
+    my $logged_in_user = session('logged_in_user');
+
     my $cfg = new Config::Simple('../ldapnagios.cfg');
 
     my $configFile = $cfg->param('configFile');
     my $objectType = $cfg->param('objectType');
 
     my $svn_local_workspace = $cfg->param('svn_local_workspace');
+    $svn_local_workspace .= "/$logged_in_user";
+
     my $svn_url = $cfg->param('svn_url');
-#    my $svn_username = $cfg->param('svn_username');
-#    my $svn_password = $cfg->param('svn_password');
-
-
-   debug("svn_local_workspace: $svn_local_workspace");
 
     my $contact = NagiosContact->new({
                                    fname => request->param('fname'),
@@ -100,8 +99,10 @@ get '/add_contact' => require_role Admins => sub {
                                               filter => $objectType
                                              });
 
+##
+## ADD CONTACT GROUP OBJECT HERE
+
     for(my $i = 0; $i <= $objconfigfile->get_count -1 ; $i++) {            # run the fullName against the config file objects to ensure that it does not exist yet
-        print Dumper($objconfigfile->get_allobjects->[$i]->{attribute}->{contact_name});
 
         if ($contact->get_fullName eq $objconfigfile->get_allobjects->[$i]->{attribute}->{contact_name}) {
             return $contact->get_fullName . " nagios contact already exists. Nothing to do.";
@@ -115,6 +116,74 @@ get '/add_contact' => require_role Admins => sub {
     return "Successfully updated $svn_local_workspace/$configFile";
 
 };
+
+get '/show_objects' => require_role Admins => sub {
+
+    my $logged_in_user = session('logged_in_user');
+    my $svn_url = request->param('svnurl');
+    my $objectType = request->param('objectType');
+
+    if($svn_url){
+                                                                                   # prepare local workspace
+        my $cfg = new Config::Simple('../ldapnagios.cfg'); 
+
+        my $svn_local_workspace = $cfg->param('svn_local_workspace');
+        $svn_local_workspace .= "/$logged_in_user";
+        
+        if ( -e $svn_local_workspace ) {                                           # clean-up local workspace
+            unlink glob "$svn_local_workspace/*";
+        }
+                                                                                    # prepare svn client for checkout
+        my $client = new SVN::Client(
+            auth => [
+                      SVN::Client::get_simple_provider(),
+                      SVN::Client::get_simple_prompt_provider(\&simple_prompt,2),
+                      SVN::Client::get_username_provider()
+                    ]);
+
+        $client->checkout($svn_url,$svn_local_workspace,'HEAD',1);                  # checkout the config file
+
+        opendir (my $dh, $svn_local_workspace);
+
+        my @cfg = grep { /\.cfg/ } readdir($dh);
+
+        my @arr = map { { 'name' => $_ } } @cfg;
+
+        closedir $dh;
+
+#        my @filename = split '/' , $svn_url ;
+#        debug( Dumper(@filename));                                                                                   # create the config file object
+#        debug( "file: $filename[$#filename]" );
+#        debug( "Load File: $svn_local_workspace/$filename[$#filename]" );
+#        my $objconfigfile = NagiosConfigObjects->new({
+#                                   file => "$svn_local_workspace/$targetfile",
+#                                   filter => $objectType
+#                                });
+#        debug( Dumper($objconfigfile->get_allobjects()) );        
+        
+        my %var = (
+                    'logged_in_user' => $logged_in_user,
+                    'sw_select'      => 1,
+                    'select_options' => \@arr,
+                    'objtype'        => $objectType,
+                    'svnurl'         => $svn_url,
+                  );
+
+        debug(Dumper(%var));
+                    
+        template 'show-objects', \%var;
+    }
+    else{
+        template 'show-objects', {
+                                    'logged_in_user' => $logged_in_user,
+                                    'sw_select' => 0,
+                                  };
+
+    }
+};
+
+
+#### UTILITY FUNCTIONS
 
 sub simple_prompt {
     my ($cred, $realm, $default_username, $may_save, $pool) = @_;
