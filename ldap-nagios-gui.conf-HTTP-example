@@ -1,0 +1,28 @@
+Listen 5000
+
+<VirtualHost *:5000>
+
+#        ServerName vmdwh01
+        DocumentRoot /var/www/ldap-nagios-gui/public
+
+#        ServerAdmin you@example.com
+
+        <Directory "/var/www/ldap-nagios-gui/public/">
+            AllowOverride None
+            Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+            SetHandler fcgid-script
+            AuthName    "Authentication Required !!!"
+            AuthType    Basic
+            AuthBasicProvider file
+            AuthUserFile /var/www/ldap-nagios-gui/htpasswd.users
+            Require valid-user
+        </Directory>
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        # Run FastCGI dispatcher instead of CGI dispatcher
+        RewriteRule ^(.*)$ /dispatch.fcgi$1 [QSA,L]
+
+        ErrorLog  /var/log/httpd/vmdwh01-error.log
+        CustomLog /var/log/httpd/vmdwh01-access_log common
+</VirtualHost>
