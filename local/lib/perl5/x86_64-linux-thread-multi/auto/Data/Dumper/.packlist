@@ -1,0 +1,4 @@
+/usr/lib64/perl5/Data/Dumper.pm
+/usr/lib64/perl5/auto/Data/Dumper/Dumper.so
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/Data/Dumper.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/auto/Data/Dumper/Dumper.so

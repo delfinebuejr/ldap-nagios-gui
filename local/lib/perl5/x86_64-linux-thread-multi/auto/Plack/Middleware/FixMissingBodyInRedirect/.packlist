@@ -1,0 +1,3 @@
+/usr/local/share/man/man3/Plack::Middleware::FixMissingBodyInRedirect.3pm
+/usr/local/share/perl5/Plack/Middleware/FixMissingBodyInRedirect.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Plack/Middleware/FixMissingBodyInRedirect.pm

@@ -1,0 +1,6 @@
+/usr/bin/pod2usage
+/usr/share/man/man1/pod2usage.1
+/usr/share/man/man3/Pod::Usage.3pm
+/usr/share/perl5/Pod/Usage.pm
+/var/www/ldap-nagios-gui/local/bin/pod2usage
+/var/www/ldap-nagios-gui/local/lib/perl5/Pod/Usage.pm

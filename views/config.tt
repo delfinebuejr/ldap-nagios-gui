@@ -1,0 +1,34 @@
+<form role="form" action="/save_config">
+    <div class="form-group">
+
+       <label for="connstring"> LDAP Connection String:</label>
+       <input type="text" class="form-control" id="connstring" value="<% connstring %>" name="connstring">
+
+       <label for="ldapUserBase"> ldapUserBase:</label>
+       <input type="text" class="form-control" id="ldapUserBase" value="<% ldapUserBase %>" name="ldapUserBase">
+
+       <label for="ldapGroupBase"> ldapGroupBase:</label>
+       <input type="text" class="form-control" id="ldapGroupBase" value="<% ldapGroupBase %>" name="ldapGroupBase">
+
+       <label for="configFile"> configFile:</label>
+       <input type="text" class="form-control" id="configFile" value="<% configFile %>" name="configFile">
+
+       <label for="objectType"> objectType:</label>
+       <input type="text" class="form-control" id="objectType" value="<% objectType %>" name="objectType">
+
+       <label for="svn_local_workspace"> svn_local_workspace:</label>
+       <input type="text" class="form-control" id="svn_local_workspace" value="<% svn_local_workspace %>" name="svn_local_workspace">
+
+       <label for="svn_url"> svn_url:</label>
+       <input type="text" class="form-control" id="svn_url" value="<% svn_url %>" name="svn_url">
+
+       <label for="svn_username"> svn_username:</label>
+       <input type="text" class="form-control" id="svn_username" value="<% svn_username %>" name="svn_username">
+
+       <label for="svn_password"> svn_password:</label>
+       <input type="text" class="form-control" id="svn_password" value="<% svn_password %>" name="svn_password">
+
+       <button type="submit" class="btn btn-success" value="save" name="submit">save</button>
+
+    </div>
+</form>

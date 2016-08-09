@@ -1,0 +1,9 @@
+/usr/local/share/man/man3/IO::TieCombine.3pm
+/usr/local/share/man/man3/IO::TieCombine::Handle.3pm
+/usr/local/share/man/man3/IO::TieCombine::Scalar.3pm
+/usr/local/share/perl5/IO/TieCombine.pm
+/usr/local/share/perl5/IO/TieCombine/Handle.pm
+/usr/local/share/perl5/IO/TieCombine/Scalar.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/IO/TieCombine.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/IO/TieCombine/Handle.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/IO/TieCombine/Scalar.pm

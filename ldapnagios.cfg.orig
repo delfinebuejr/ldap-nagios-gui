@@ -1,0 +1,17 @@
+# LDAP CONFIG
+
+connstring = '10.0.3.4,cn=manager,redhat'
+ldapUserBase = 'ou=Users,dc=local,dc=lan'
+ldapGroupBase = 'ou=Group,dc=local,dc=lan'
+
+# NAGIOS CONTACTS CONFIG
+
+configFile = contacts.cfg
+objectType = contact
+
+# SVN CONNECTION
+
+svn_local_workspace = '/tmp'
+svn_url = 'http://www.svn1.local.lan/svn/repo1/trunk/nagios_config/nagios/etc/objects'
+svn_username = dfie
+svn_password = redhat

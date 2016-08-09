@@ -1,4 +1,5 @@
 package myapp;
+use lib '../local/lib/perl5';
 use Dancer2;
 use Dancer2::Plugin::Auth::Extensible;
 use Config::Simple;
@@ -11,11 +12,19 @@ use SVN::Client;
 our $VERSION = '0.1';
 
 get '/' => sub {
+    my  $remote_user = request->user;
+    session('remote_user' => $remote_user);
     session( 'cnt' => 1 );
-    template 'index';
+    my %var = (
+              'remote_user' => $remote_user
+              ); 
+
+   template 'index', \%var;
 };
 
-get '/ldapnagios' => require_role Admins => sub {
+get '/ldapnagios' => sub {
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
     my $counter = session('cnt') || 0;
     $counter++;
     debug("Counter: $counter");
@@ -25,13 +34,13 @@ get '/ldapnagios' => require_role Admins => sub {
     my $logged_in_user = session('logged_in_user');
              
     template 'ldap-nagios', {
-                              'logged_in_user' => $logged_in_user
+                              'remote_user' => $remote_user
                             };
 };
 
-get '/ldapquery' => require_role Admins => sub {
-
-    my $logged_in_user = session('logged_in_user');
+get '/ldapquery' => sub {
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
 
     my $targetUser = request->param('username');      # catch $env variables
     my $cfg = new Config::Simple('../ldapnagios.cfg');
@@ -46,7 +55,7 @@ get '/ldapquery' => require_role Admins => sub {
     if ($objldapuser->get_dn) {
     
         template 'display-ldap-query-result', { 
-                                                'logged_in_user' => $logged_in_user,
+                                                'remote_user' => $remote_user,
                                                 'fname' => $objldapuser->get_fname,
                                                 'lname' => $objldapuser->get_lname,
                                                 'email' => $objldapuser->get_email,
@@ -59,9 +68,10 @@ get '/ldapquery' => require_role Admins => sub {
     }
 };
 
-get '/add_contact' => require_role Admins => sub {
+get '/add_contact' => sub {
 
-    my $logged_in_user = session('logged_in_user');
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
 
     my $cfg = new Config::Simple('../ldapnagios.cfg');
 
@@ -69,7 +79,7 @@ get '/add_contact' => require_role Admins => sub {
     my $objectType = $cfg->param('objectType');
 
     my $svn_local_workspace = $cfg->param('svn_local_workspace');
-    $svn_local_workspace .= "/$logged_in_user";
+    $svn_local_workspace .= "/$remote_user";
 
     my $svn_url = $cfg->param('svn_url');
 
@@ -117,9 +127,11 @@ get '/add_contact' => require_role Admins => sub {
 
 };
 
-get '/show_objects' => require_role Admins => sub {
+get '/show_objects' => sub {
 
-    my $logged_in_user = session('logged_in_user');
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
+
     my $svn_url = request->param('svnurl');
     my $objectType = request->param('objectType');
 
@@ -128,7 +140,7 @@ get '/show_objects' => require_role Admins => sub {
         my $cfg = new Config::Simple('../ldapnagios.cfg'); 
 
         my $svn_local_workspace = $cfg->param('svn_local_workspace');
-        $svn_local_workspace .= "/$logged_in_user";
+        $svn_local_workspace .= "/$remote_user";
         
         if ( -e $svn_local_workspace ) {                                           # clean-up local workspace
             unlink glob "$svn_local_workspace/*";
@@ -162,7 +174,7 @@ get '/show_objects' => require_role Admins => sub {
 #        debug( Dumper($objconfigfile->get_allobjects()) );        
         
         my %var = (
-                    'logged_in_user' => $logged_in_user,
+                    'remote_user' => $remote_user,
                     'sw_select'      => 1,
                     'select_options' => \@arr,
                     'objtype'        => $objectType,
@@ -175,12 +187,73 @@ get '/show_objects' => require_role Admins => sub {
     }
     else{
         template 'show-objects', {
-                                    'logged_in_user' => $logged_in_user,
+                                    'remote_user' => $remote_user,
                                     'sw_select' => 0,
                                   };
 
     }
 };
+
+
+get '/config' => sub {
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
+
+    my $cfg = new Config::Simple('../ldapnagios.cfg');
+    my %var = (
+               'configFile'    => $cfg->param('configFile'),
+               'objectType'    => $cfg->param('objectType'),
+               'connstring'    => $cfg->param('connstring'),
+               'ldapUserBase'  => $cfg->param('ldapUserBase'),
+               'ldapGroupBase' => $cfg->param('ldapGroupBase'),
+               'svn_local_workspace' => $cfg->param('svn_local_workspace'),
+               'svn_url'       => $cfg->param('svn_url'),
+               'svn_username'  => $cfg->param('svn_username'),
+               'svn_password'  => $cfg->param('svn_password'),
+               'remote_user'   => $remote_user,
+            );
+
+    template 'config', \%var;
+
+}; 
+
+get '/save_config' => sub {
+    my $remote_user = request->user;
+    session('remote_user' => $remote_user);
+
+    my $cfg = new Config::Simple('../ldapnagios.cfg');
+
+    $cfg->param('configFile', request->param('configFile')),
+    $cfg->param('objectType', request->param('objectType')),
+    $cfg->param('connstring', "\'" . request->param('connstring') . "\'"),
+    $cfg->param('ldapUserBase', "\'". request->param('ldapUserBase') ."\'"),
+    $cfg->param('ldapGroupBase', "\'" . request->param('ldapGroupBase') . "\'"),
+    $cfg->param('svn_local_workspace', "\'" . request->param('svn_local_workspace') ."\'"),
+    $cfg->param('svn_url', "\'" . request->param('svn_url') . "\'"),
+    $cfg->param('svn_username', request->param('svn_username')),
+    $cfg->param('svn_password', request->param('svn_password')),
+
+    $cfg->save();
+
+    return "file saved";
+
+};
+
+get '/html_env' => sub {
+     my $params = request->env;
+#    my $params =  request->user;
+
+    return Dumper($params);
+
+};
+
+get '/show_params' => sub {
+
+    my $params = request->env;
+
+    return Dumper($params);
+
+}; 
 
 
 #### UTILITY FUNCTIONS

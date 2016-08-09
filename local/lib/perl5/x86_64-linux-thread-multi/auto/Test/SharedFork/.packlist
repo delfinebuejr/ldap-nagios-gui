@@ -1,0 +1,9 @@
+/usr/local/share/man/man3/Test::SharedFork.3pm
+/usr/local/share/perl5/Test/SharedFork.pm
+/usr/local/share/perl5/Test/SharedFork/Array.pm
+/usr/local/share/perl5/Test/SharedFork/Scalar.pm
+/usr/local/share/perl5/Test/SharedFork/Store.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Test/SharedFork.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Test/SharedFork/Array.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Test/SharedFork/Scalar.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Test/SharedFork/Store.pm
