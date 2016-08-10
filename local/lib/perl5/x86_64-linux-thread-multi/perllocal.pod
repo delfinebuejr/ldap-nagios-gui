@@ -2066,3 +2066,663 @@ C<EXE_FILES: script/dancer2>
 
 =back
 
+=head2 Wed Aug 10 08:01:58 2016: C<Module> L<Config::Simple|Config::Simple>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.58>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:04 2016: C<Module> L<CGI|CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.32>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:11 2016: C<Module> L<FCGI|FCGI>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.78>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:11 2016: C<Module> L<CGI::Fast|CGI::Fast>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:15 2016: C<Module> L<Session::Token|Session::Token>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.502>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:19 2016: C<Module> L<Path::Tiny|Path::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.096>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:27 2016: C<Module> L<Variable::Magic|Variable::Magic>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.59>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:27 2016: C<Module> L<B::Hooks::EndOfScope|B::Hooks::EndOfScope>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.21>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:28 2016: C<Module> L<namespace::clean|namespace::clean>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.27>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:31 2016: C<Module> L<Test::Fatal|Test::Fatal>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.014>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:31 2016: C<Module> L<Crypt::SaltedHash|Crypt::SaltedHash>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:32 2016: C<Module> L<Dancer2::Plugin::Auth::Extensible|Dancer2::Plugin::Auth::Extensible>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.601>
+
+=item *
+
+C<EXE_FILES: bin/dancer2-generate-crypted-password>
+
+=back
+
+=head2 Wed Aug 10 08:02:43 2016: C<Module> L<Digest::HMAC|Digest::HMAC>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:44 2016: C<Module> L<Authen::SASL|Authen::SASL>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.16>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:49 2016: C<Module> L<GSSAPI|GSSAPI>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.28>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:50 2016: C<Module> L<HTTP::Negotiate|HTTP::Negotiate>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:02:52 2016: C<Module> L<XML::SAX::Base|XML::SAX::Base>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.08>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:10 2016: C<Module> L<Math::BigInt|Math::BigInt>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.999726>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:11 2016: C<Module> L<Convert::ASN1|Convert::ASN1>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.27>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:31 2016: C<Module> L<Net::SSLeay|Net::SSLeay>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.77>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:34 2016: C<Module> L<Mozilla::CA|Mozilla::CA>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 20160104>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:34 2016: C<Module> L<IO::Socket::SSL|IO::Socket::SSL>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.034>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:37 2016: C<Module> L<JSON|JSON>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.90>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:44 2016: C<Module> L<File::Listing|File::Listing>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:46 2016: C<Module> L<HTTP::Daemon|HTTP::Daemon>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:47 2016: C<Module> L<Net::HTTP|Net::HTTP>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:49 2016: C<Module> L<HTTP::Cookies|HTTP::Cookies>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:50 2016: C<Module> L<WWW::RobotRules|WWW::RobotRules>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:03:50 2016: C<Module> L<LWP|LWP>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.15>
+
+=item *
+
+C<EXE_FILES: bin/lwp-download bin/lwp-dump bin/lwp-mirror bin/lwp-request>
+
+=back
+
+=head2 Wed Aug 10 08:03:51 2016: C<Module> L<Net::LDAP|Net::LDAP>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.65>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

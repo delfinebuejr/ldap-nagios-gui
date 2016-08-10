@@ -1,0 +1,1 @@
+{"provides":{"GSSAPI::OID::Set":{"file":"GSSAPI/OID/Set.pm"},"GSSAPI::OID":{"file":"GSSAPI/OID.pm"},"GSSAPI::Status":{"file":"GSSAPI/Status.pm"},"GSSAPI":{"version":"0.28","file":"GSSAPI.pm"}},"target":"GSSAPI","version":"0.28","name":"GSSAPI","dist":"GSSAPI-0.28","pathname":"A/AG/AGROLMS/GSSAPI-0.28.tar.gz"}

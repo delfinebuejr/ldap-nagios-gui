@@ -1,0 +1,5 @@
+/usr/local/lib64/perl5/FCGI.pm
+/usr/local/lib64/perl5/auto/FCGI/FCGI.so
+/usr/local/share/man/man3/FCGI.3pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/FCGI.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/auto/FCGI/FCGI.so

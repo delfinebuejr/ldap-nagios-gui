@@ -1,0 +1,11 @@
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI.pod
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/Carp.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/Cookie.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/File/Temp.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/HTML/Functions.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/HTML/Functions.pod
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/Pretty.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/Push.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/CGI/Util.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/Fh.pm
