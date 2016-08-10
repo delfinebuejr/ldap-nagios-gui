@@ -2726,3 +2726,69 @@ C<EXE_FILES: >
 
 =back
 
+=head2 Wed Aug 10 08:30:47 2016: C<Module> L<Test::LeakTrace|Test::LeakTrace>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.15>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:30:55 2016: C<Module> L<AppConfig|AppConfig>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.71>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Aug 10 08:30:56 2016: C<Module> L<Template|Template>
+
+=over 4
+
+=item *
+
+C<installed into: /var/www/ldap-nagios-gui/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.26>
+
+=item *
+
+C<EXE_FILES: bin/tpage bin/ttree>
+
+=back
+

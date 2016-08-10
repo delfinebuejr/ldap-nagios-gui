@@ -1,0 +1,11 @@
+/usr/local/lib64/perl5/Test/LeakTrace.pm
+/usr/local/lib64/perl5/Test/LeakTrace/JA.pod
+/usr/local/lib64/perl5/Test/LeakTrace/Script.pm
+/usr/local/lib64/perl5/auto/Test/LeakTrace/LeakTrace.so
+/usr/local/share/man/man3/Test::LeakTrace.3pm
+/usr/local/share/man/man3/Test::LeakTrace::JA.3pm
+/usr/local/share/man/man3/Test::LeakTrace::Script.3pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/Test/LeakTrace.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/Test/LeakTrace/JA.pod
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/Test/LeakTrace/Script.pm
+/var/www/ldap-nagios-gui/local/lib/perl5/x86_64-linux-thread-multi/auto/Test/LeakTrace/LeakTrace.so
