@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 BEGIN { $ENV{DANCER_APPHANDLER} = 'PSGI';}
+use lib '../local/lib/perl5';
 use Dancer2;
 use FindBin '$RealBin';
 use Plack::Handler::FCGI;
