@@ -56,8 +56,8 @@ get '/ldapquery' => sub {
     
         template 'display-ldap-query-result', { 
                                                 'remote_user' => $remote_user,
-                                                'fname' => $objldapuser->get_fname,
-                                                'lname' => $objldapuser->get_lname,
+                                                'uid' => $objldapuser->get_uid,
+                                                'cn' => $objldapuser->get_cn,
                                                 'email' => $objldapuser->get_email,
                                                 'contactGroup' => 'testGroup',
                                                 'contactType' => 'testType',
@@ -84,8 +84,8 @@ get '/add_contact' => sub {
     my $svn_url = $cfg->param('svn_url');
 
     my $contact = NagiosContact->new({
-                                   fname => request->param('fname'),
-                                   lname => request->param('lname'),
+                                   uid => request->param('uid'),
+                                   cn => request->param('cn'),
                                    email => request->param('email'),
                                    contactGroup => request->param('contactGroup'),
                                    contactType => request->param('contactGroup')
@@ -114,7 +114,7 @@ get '/add_contact' => sub {
 
     for(my $i = 0; $i <= $objconfigfile->get_count -1 ; $i++) {            # run the fullName against the config file objects to ensure that it does not exist yet
 
-        if ($contact->get_fullName eq $objconfigfile->get_allobjects->[$i]->{attribute}->{contact_name}) {
+        if ($contact->get_uid eq $objconfigfile->get_allobjects->[$i]->{attribute}->{contact_name}) {
             return $contact->get_fullName . " nagios contact already exists. Nothing to do.";
         }
     }
