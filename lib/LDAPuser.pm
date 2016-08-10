@@ -68,7 +68,6 @@ sub get_groupMembership {
 }
 
 
-
 sub search_user {
     my ( $self, $targetUser, $connstring, $ldapUserBase, $ldapGroupBase ) = @_;  
 
@@ -93,14 +92,13 @@ sub search_user {
     if ($ldap_user->entries) {
 
         foreach ($ldap_user->entries) {
-            my $founduser = $_;
             
-            $self->set_fname($founduser->asn->{attributes}[0]->{vals}[0]); 
-            $self->set_lname($founduser->asn->{attributes}[1]->{vals}[0]);
-            $self->set_cn($founduser->asn->{attributes}[2]->{vals}[0]);
-            $self->set_uid($founduser->asn->{attributes}[3]->{vals}[0]);
-            $self->set_email($founduser->asn->{attributes}[4]->{vals}[0]);           
-            $self->set_dn($founduser->asn->{objectName});
+            $self->set_fname($_->get_value('givenName')); 
+            $self->set_lname($_->get_value('sn'));
+            $self->set_cn($_->get_value('cn'));
+            $self->set_uid($_->get_value('uid'));
+            $self->set_email($_->get_value('mail'));           
+            $self->set_dn($_->dn);
 
             my $dn = $self->get_dn;
             my $uid = $self->get_uid;
@@ -138,35 +136,63 @@ sub search_user_debug {
     $user =~ s/^\s+|\s+$//g;
     $password =~ s/^\s+|\s+$//g;
 
-    print "$server\n$user\n$password\n";
-
     my $ldap = Net::LDAP->new($server) or die "unable to connect $@";
     $ldap->bind ( $user, password => $password ) or die "unable to connect to ldap $@";
 
+    my $dn;
+    my $uid;
+          
     my $ldap_user = $ldap->search(
-                               base => $ldapUserBase,
-                               filter => "|(cn=$targetUser)(uid=$targetUser)",
-                               
-                                 );
+                            base => $ldapUserBase,
+                            filter => "|(cn=$targetUser)(uid=$targetUser)",                        
+                         );
 
     if ($ldap_user->entries) {
 
-#        print Dumper($ldap_user->entries);
         foreach ($ldap_user->entries) {
-            my $founduser = $_;
 
-           print Dumper($founduser->asn->{objectName});
-           print Dumper($founduser->asn->{attributes});
+            $_->dump;
 
+            print "dn : "            . $_->asn->{objectName} . "\n";
+            print "sn : "            . $_->get_value('sn') . "\n";
+            print "cn : "            . $_->get_value('cn') . "\n";
+            print "uid : "           . $_->get_value('uid') . "\n";
+            print "uidNumber : "     . $_->get_value('uidNumber') . "\n";
+            print "gidNumber : "     . $_->get_value('gidNumber') . "\n";
+            print "homeDirectory : " . $_->get_value('homeDirectory') . "\n";
+        
+#            print Dumper($_);
+
+#            $dn = $_->asn->{objectName};
+            $dn = $_->dn();
+            $uid = $_->get_value('uid');
+        }
+         
+        my $ldap_groups = $ldap->search(
+                             base => $ldapGroupBase,
+                             filter => "|(member=$dn)(memberUid=$uid)",
+                             );
+
+        foreach ($ldap_groups->entries){
+#            $_->dump;
+#           print Dumper($_); 
+
+#            my @members = $_->get_value('member') || 'none' ;  
+         
+             foreach ($_->get_value('member')) {
+                  print " -- $_";
+             }
+ 
+#            print  $_->get_value('cn') . " : " . scalar(@members) . "\n" ;
+            
         }
 
-    }
+    }    
     else{
-       print "user with cn=" . $self->{attribute}{cn} . " or uid=" .$self->{attribute}{uid} . " does not exist\n";
+         print "user with cn=" . $self->{attribute}{cn} . " or uid=" .$self->{attribute}{uid} . " does not exist\n";
     }
 
     $ldap->unbind;
-#    print "$server\n$user\n$password\n";
 }
 
 1;
