@@ -18,43 +18,29 @@ get '/' => sub {
     my %var = (
               'remote_user' => $remote_user
               ); 
-
    template 'index', \%var;
 };
 
 get '/ldapnagios' => sub {
+    my $username = request->param('username');
     my $remote_user = request->user;
     session('remote_user' => $remote_user);
-    my $counter = session('cnt') || 0;
-    $counter++;
-    debug("Counter: $counter");
-    session( 'cnt' => $counter );
-#   my $out = session('cnt');
+   
+   if($username) {
+   
+      my $targetUser = request->param('username');      # catch $env variables
+      my $cfg = new Config::Simple('../ldapnagios.cfg');
 
-    my $logged_in_user = session('logged_in_user');
-             
-    template 'ldap-nagios', {
-                              'remote_user' => $remote_user
-                            };
-};
+      my $connstring = $cfg->param('connstring');
+      my $ldapUserBase = $cfg->param('ldapUserBase');
+      my $ldapGroupBase = $cfg->param('ldapGroupBase');
 
-get '/ldapquery' => sub {
-    my $remote_user = request->user;
-    session('remote_user' => $remote_user);
+      my $objldapuser = LDAPuser->new;
+      $objldapuser->search_user( $targetUser, $connstring, $ldapUserBase, $ldapGroupBase );
+ 
+      if ($objldapuser->get_dn) {
 
-    my $targetUser = request->param('username');      # catch $env variables
-    my $cfg = new Config::Simple('../ldapnagios.cfg');
-
-    my $connstring = $cfg->param('connstring');
-    my $ldapUserBase = $cfg->param('ldapUserBase');
-    my $ldapGroupBase = $cfg->param('ldapGroupBase');
-
-    my $objldapuser = LDAPuser->new;
-    $objldapuser->search_user( $targetUser, $connstring, $ldapUserBase, $ldapGroupBase );
-
-    if ($objldapuser->get_dn) {
-    
-        template 'display-ldap-query-result', { 
+          template 'display-ldap-query-result', {
                                                 'remote_user' => $remote_user,
                                                 'uid' => $objldapuser->get_uid,
                                                 'cn' => $objldapuser->get_cn,
@@ -62,10 +48,25 @@ get '/ldapquery' => sub {
                                                 'contactGroup' => 'testGroup',
                                                 'contactType' => 'testType',
                                               };
-    }
-    else{
-        return "$targetUser not found in LDAP";
-    }
+      }
+      else{
+
+          my %var = (
+                        'remote_user' => $remote_user,
+                        'alert_not_found' => 1,
+                    );
+   
+          template 'ldap-nagios', \%var;
+      }
+
+   }   
+   else{
+       # Create the main page  
+       template 'ldap-nagios', {
+                              'remote_user' => $remote_user
+                            };
+   }
+
 };
 
 get '/add_contact' => sub {
@@ -112,18 +113,30 @@ get '/add_contact' => sub {
 ##
 ## ADD CONTACT GROUP OBJECT HERE
 
-    for(my $i = 0; $i <= $objconfigfile->get_count -1 ; $i++) {            # run the fullName against the config file objects to ensure that it does not exist yet
+    my $isexists = 0;
+
+    for(my $i = 0; $i <= $objconfigfile->get_count -1 ; $i++) {     # run the fullName against the config file objects to ensure that it does not exist yet
 
         if ($contact->get_uid eq $objconfigfile->get_allobjects->[$i]->{attribute}->{contact_name}) {
-            return $contact->get_fullName . " nagios contact already exists. Nothing to do.";
+           $isexists = 1;            
         }
     }
 
-    $objconfigfile->write_object($contact->create_nagiosContact);
+    if($isexists){
+         return $contact->get_uid . " nagios contact already exists. Nothing to do.";
+#        template "modal-successful";
 
-    $client->commit("$svn_local_workspace/$configFile",0);
+    }
+    else{
 
-    return "Successfully updated $svn_local_workspace/$configFile";
+        $objconfigfile->write_object($contact->create_nagiosContact);
+
+        $client->commit("$svn_local_workspace/$configFile",0);
+
+        return "Successfully updated $svn_local_workspace/$configFile";
+
+#        template "modal-successful";
+    }
 
 };
 
@@ -237,6 +250,11 @@ get '/save_config' => sub {
 
     return "file saved";
 
+};
+
+get '/modal_success' => sub {
+
+    template 'modal-successful';
 };
 
 get '/html_env' => sub {

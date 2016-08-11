@@ -1,6 +1,22 @@
-<form action='/ldapquery'>
-    <h1> Enter Username </h1>
-    <input type='text' name='username' value='[enter username]'>
-    <input type='submit' name='submit' value='query'>
-    <hr>
+<br>
+<form>
+    <label for="username"> Enter Username </label>
+    <input type="text" class="form-control" id="username" name="username">
+    <br>
+    <button type="submit" class="btn btn-success" name="submit"> <span href="#" class="glyphicon glyphicon-search"></span> Search</button>
 </form>
+
+
+
+<% IF alert_not_found %>
+
+<hr>
+<br>
+
+<div class="alert alert-warning fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Warning!</strong> This user does not exist on the LDAP server.
+</div>
+
+
+<%- END %>

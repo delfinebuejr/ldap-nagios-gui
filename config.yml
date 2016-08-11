@@ -4,6 +4,7 @@
 
 # Your application's name
 appname: "myapp"
+environment: development
 
 # The default layout to use for your application (located in
 # views/layouts/main.tt)
@@ -52,8 +53,6 @@ engines:
 #      is_http_only: 1
 
 session: "YAML"
-logger: console
-log: core
  
 plugins:
     Auth::Extensible:
@@ -66,3 +65,4 @@ plugins:
                       name: 'delfin ebue'
                       roles:
                         - Admins
+
