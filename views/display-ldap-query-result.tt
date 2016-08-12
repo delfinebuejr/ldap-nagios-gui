@@ -1,20 +1,23 @@
 <br>
 <h4> The user exists in LDAP do you want to add it to contacts.cfg?</h4>
 <table class="table">
-    
-    <tr> <td> uid </td> 
-         <td> cn </td>
-         <td> Email </td>
-         <td> Contact Type </td>
-         <td> Contact Group </td>
-    </tr>   
-        <td> <% uid %> </td>
-        <td> <% cn %> </td>
-        <td> <% email %> </td>
-        <td> <% contactGroup %> </td>
-        <td> <% contactType %> </td>
-    </tr>
-   
+    <thead>
+        <tr> <th> uid </th> 
+             <th> cn </th>
+             <th> Email </th>
+             <th> Contact Type </th>
+             <th> Contact Group </th>
+        </tr>   
+    </thead>
+    <tbody>
+        <tr>
+            <td> <% uid %> </td>
+            <td> <% cn %> </td>
+            <td> <% email %> </td>
+            <td> <% contactGroup %> </td>
+            <td> <% contactType %> </td>
+        </tr>
+   </tbody>
 </table>
 
 <form action='/add_contact'>

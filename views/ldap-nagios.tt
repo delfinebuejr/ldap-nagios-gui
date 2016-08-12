@@ -6,8 +6,6 @@
     <button type="submit" class="btn btn-success" name="submit"> <span href="#" class="glyphicon glyphicon-search"></span> Search</button>
 </form>
 
-
-
 <% IF alert_not_found %>
 
 <hr>

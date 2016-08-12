@@ -166,16 +166,16 @@ get '/show_objects' => sub {
                       SVN::Client::get_username_provider()
                     ]);
 
-        $client->checkout($svn_url,$svn_local_workspace,'HEAD',1);                  # checkout the config file
+        $client->checkout($svn_url,$svn_local_workspace,'HEAD',1);                  # checkout the ALL files in the SVN directory
 
-        opendir (my $dh, $svn_local_workspace);
-
-        my @cfg = grep { /\.cfg/ } readdir($dh);
-
-        my @arr = map { { 'name' => $_ } } @cfg;
-
-        closedir $dh;
-
+#        opendir (my $dh, $svn_local_workspace);
+#
+#        my @cfg = grep { /\.cfg/ } readdir($dh);
+#
+#        my @arr = map { { 'name' => $_ } } @cfg;
+#
+#        closedir $dh;
+#
 #        my @filename = split '/' , $svn_url ;
 #        debug( Dumper(@filename));                                                                                   # create the config file object
 #        debug( "file: $filename[$#filename]" );
@@ -189,7 +189,7 @@ get '/show_objects' => sub {
         my %var = (
                     'remote_user' => $remote_user,
                     'sw_select'      => 1,
-                    'select_options' => \@arr,
+#                   'select_options' => \@arr,
                     'objtype'        => $objectType,
                     'svnurl'         => $svn_url,
                   );
@@ -272,6 +272,44 @@ get '/show_params' => sub {
     return Dumper($params);
 
 }; 
+
+get '/show_form' => sub {
+
+   
+
+
+    my %var = (
+               'contacts' => [
+                               {
+                                 'uid' => 'myuid',
+                                 'cn'  => 'mycn', 
+                                 'email' => 'myemail',
+                                 'contact_group' => 'mycontactgroup',
+                                 'contact_type'  => 'mycontacttype',
+                               },
+                               
+                               {
+                                 'uid' => 'myuid',
+                                 'cn'  => 'mycn', 
+                                 'email' => 'myemail',
+                                 'contact_group' => 'mycontactgroup',
+                                 'contact_type'  => 'mycontacttype',
+                               },
+                               
+                               {
+                                 'uid' => 'myuid',
+                                 'cn'  => 'mycn', 
+                                 'email' => 'myemail',
+                                 'contact_group' => 'mycontactgroup',
+                                 'contact_type'  => 'mycontacttype',
+                               },
+
+                             ],
+
+              );
+
+    template 'delete_users', \%var;
+};
 
 
 #### UTILITY FUNCTIONS
