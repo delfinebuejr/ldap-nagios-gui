@@ -45,7 +45,7 @@ sub get_type {
 }
 
 sub get_data {
-    my ($self, $name) = shift;
+    my ($self, $name) = @_;
     return $self->{attribute}{$name};
 }
 
