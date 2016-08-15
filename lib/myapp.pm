@@ -34,19 +34,37 @@ get '/ldapnagios' => sub {
       my $connstring = $cfg->param('connstring');
       my $ldapUserBase = $cfg->param('ldapUserBase');
       my $ldapGroupBase = $cfg->param('ldapGroupBase');
+     
 
       my $objldapuser = LDAPuser->new;
       $objldapuser->search_user( $targetUser, $connstring, $ldapUserBase, $ldapGroupBase );
  
       if ($objldapuser->get_dn) {
 
+          my $svn_file = checkout_svnurl( $cfg->param('svn_url') );
+          my $target_file = $cfg->param('configFile');        
+
+          debug "DEBUG: $svn_file";
+  
+          my $cgroups = NagiosConfigObjects->new({
+                                                  'file' => "$svn_file/$target_file",
+                                                  'filter' => 'contactgroup',
+                                                });
+
+          my @arr_cgroups;
+
+          foreach my $item (@{$cgroups->get_allobjects}) {
+                   push @arr_cgroups, $item->get_data('contactgroup_name');
+                   info "INFO:" . $item->get_data('contactgroup_name');
+          }
+
           template 'display-ldap-query-result', {
                                                 'remote_user' => $remote_user,
                                                 'uid' => $objldapuser->get_uid,
                                                 'cn' => $objldapuser->get_cn,
                                                 'email' => $objldapuser->get_email,
-                                                'contactGroup' => 'testGroup',
-                                                'contactType' => 'testType',
+                                                'contactGroup' => \@arr_cgroups,
+                                                'contactType' => 'generic-contact',
                                               };
       }
       else{
@@ -180,16 +198,20 @@ get '/show_objects' => sub {
 #        debug( Dumper(@filename));                                                                                   # create the config file object
 #        debug( "file: $filename[$#filename]" );
 #        debug( "Load File: $svn_local_workspace/$filename[$#filename]" );
-#        my $objconfigfile = NagiosConfigObjects->new({
+#
+#        my $cgroups = NagiosConfigObjects->new({
 #                                   file => "$svn_local_workspace/$targetfile",
-#                                   filter => $objectType
+#                                   filter => 'contactgroup'
 #                                });
+#
 #        debug( Dumper($objconfigfile->get_allobjects()) );        
+
+       
         
         my %var = (
                     'remote_user' => $remote_user,
                     'sw_select'      => 1,
-#                   'select_options' => \@arr,
+#                    'cgroups'        => $cgroups,
                     'objtype'        => $objectType,
                     'svnurl'         => $svn_url,
                   );
@@ -313,6 +335,43 @@ get '/show_form' => sub {
 
 
 #### UTILITY FUNCTIONS
+
+sub checkout_svnurl {
+
+    my ( $svn_url) = @_;
+
+    my $remote_user = request->user;
+	
+    if($svn_url){
+                                                                                   # prepare local workspace
+        my $cfg = new Config::Simple('../ldapnagios.cfg');
+
+        my $svn_local_workspace = $cfg->param('svn_local_workspace');
+  
+        $svn_local_workspace .= "/$remote_user";
+
+        if ( -e $svn_local_workspace ) {                                           # clean-up local workspace
+
+            unlink glob "$svn_local_workspace/*";
+
+        }
+                                                                                    # prepare svn client for checkout
+        my $client = new SVN::Client(
+                auth => [
+                      SVN::Client::get_simple_provider(),
+                      SVN::Client::get_simple_prompt_provider(\&simple_prompt,2),
+                      SVN::Client::get_username_provider()
+                    ]);
+
+        $client->checkout($svn_url,$svn_local_workspace,'HEAD',1);                  # checkout the config file
+
+        return $svn_local_workspace;
+
+    }
+    else{
+        return undef;
+    }
+}
 
 sub simple_prompt {
     my ($cred, $realm, $default_username, $may_save, $pool) = @_;

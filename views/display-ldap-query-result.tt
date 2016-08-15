@@ -1,5 +1,8 @@
 <br>
 <h4> The user exists in LDAP do you want to add it to contacts.cfg?</h4>
+
+<form action='/add_contact'>
+
 <table class="table">
     <thead>
         <tr> <th> uid </th> 
@@ -14,20 +17,21 @@
             <td> <% uid %> </td>
             <td> <% cn %> </td>
             <td> <% email %> </td>
-            <td> <% contactGroup %> </td>
+            <td> <select class="form-control" id="cgroup" name="contactGroup">
+                 <% FOREACH cgroup IN contactGroup %>
+                 <option><% cgroup %></option>
+                 <%- END %>
+           </td>
             <td> <% contactType %> </td>
         </tr>
    </tbody>
 </table>
-
-<form action='/add_contact'>
 
     <button type='submit' class="btn btn-success" name='add' data-toggle="modal" data-target="/add_contact"> Add to contact</button>
 
     <input type='hidden' name='uid' value='<% uid %>'>
     <input type='hidden' name='cn' value='<% cn %>'>
     <input type='hidden' name='email' value='<% email %>' >
-    <input type='hidden' name='contactGroup' value='<% contactGroup %>' >
     <input type='hidden' name='contactType' value='<% contactType %>' >
 
 </form>
