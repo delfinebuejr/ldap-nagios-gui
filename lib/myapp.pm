@@ -107,7 +107,7 @@ get '/add_contact' => sub {
                                    cn => request->param('cn'),
                                    email => request->param('email'),
                                    contactGroup => request->param('contactGroup'),
-                                   contactType => request->param('contactGroup')
+                                   contactType => request->param('contactType')
                                 });
 
     my $client = new SVN::Client(
