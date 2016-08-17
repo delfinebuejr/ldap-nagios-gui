@@ -1,0 +1,21 @@
+
+<br>
+<h3> Are you sure you want to delete the following users? </h3>
+
+<form action="/delete_contact_now">
+    <table class="table table-bordered">
+        <thead>
+            <th colspan="1">  contact_name </th>
+        </thead>
+        <tbody>
+            <% FOREACH contact IN contacts  %>
+            <tr> <td><% contact %></td> </tr>
+            <input type="hidden" name="contact_name" value="<% contact %>">
+            <%- END %>
+        </tbody>
+    </table>
+   
+    <button type="submit" class="btn btn-success">Delete</button>
+
+</form>
+<hr>

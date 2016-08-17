@@ -1,11 +1,12 @@
 
-<form>
 <br>
+<form action="/confirm_delete">
 <table class="table table-hover">
     <thead>
+        <tr><th colspan="5" class="text-center"> <h3> <b> nagios.cfg contact object list </b> </h3> </th><tr>
         <tr>
-            <th class="text-left">uid</th>
-            <th class="text-left">cn</th>
+            <th class="text-left">contact_name</th>
+            <th class="text-left">alias</th>
             <th class="text-left">email</th>
             <th class="text-left">Contact Group</th>
             <th class="text-left">Contact Type</th>
@@ -14,13 +15,22 @@
     <tbody>
         <% FOREACH contact IN contacts %>
         <tr> 
-            <td><input type="checkbox" value=""><% contact.uid %></td>
-            <td><% contact.cn %></td>
+            <td><input type="checkbox" name="contact_name" value="<% contact.contact_name %>"><% contact.contact_name %></td>
+            <td><% contact.alias %></td>
             <td><% contact.email  %></td>
-            <td><% contact.contact_group %></td>
-            <td><% contact.contact_type %></td>
+            <td><% contact.contactgroups %></td>
+            <td><% contact.type %></td>
         </tr>
         <%- END %>
     </tbody>
+
+
+<% dumper  %>
+
+ 
 </table>
+
+<button type="submit" class="btn btn-success">Next</button>
+
 </form>
+<hr>

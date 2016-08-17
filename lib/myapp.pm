@@ -76,7 +76,6 @@ get '/ldapnagios' => sub {
    
           template 'ldap-nagios', \%var;
       }
-
    }   
    else{
        # Create the main page  
@@ -84,7 +83,6 @@ get '/ldapnagios' => sub {
                               'remote_user' => $remote_user
                             };
    }
-
 };
 
 get '/add_contact' => sub {
@@ -141,9 +139,11 @@ get '/add_contact' => sub {
     }
 
     if($isexists){
-         return $contact->get_uid . " nagios contact already exists. Nothing to do.";
-#        template "modal-successful";
-
+#         return $contact->get_uid . " nagios contact already exists. Nothing to do.";
+        template "add-contact-result", { 
+                                     'isexists' => 'is already defined as a nagios contact. Nothing to do.',
+                                     'uid'      => $contact->get_uid,
+                                     };
     }
     else{
 
@@ -151,11 +151,13 @@ get '/add_contact' => sub {
 
         $client->commit("$svn_local_workspace/$configFile",0);
 
-        return "Successfully updated $svn_local_workspace/$configFile";
+#        return "Successfully updated $svn_local_workspace/$configFile";
 
-#        template "modal-successful";
+        template "add-contact-result", {
+                                       'isexists' => 'was successfully added to nagios.cfg',
+                                       'uid' => $contact->get_uid,
+                                     };
     }
-
 };
 
 get '/show_objects' => sub {
@@ -205,9 +207,7 @@ get '/show_objects' => sub {
 #                                });
 #
 #        debug( Dumper($objconfigfile->get_allobjects()) );        
-
-       
-        
+      
         my %var = (
                     'remote_user' => $remote_user,
                     'sw_select'      => 1,
@@ -225,7 +225,6 @@ get '/show_objects' => sub {
                                     'remote_user' => $remote_user,
                                     'sw_select' => 0,
                                   };
-
     }
 };
 
@@ -274,11 +273,6 @@ get '/save_config' => sub {
 
 };
 
-get '/modal_success' => sub {
-
-    template 'modal-successful';
-};
-
 get '/html_env' => sub {
      my $params = request->env;
 #    my $params =  request->user;
@@ -289,48 +283,88 @@ get '/html_env' => sub {
 
 get '/show_params' => sub {
 
-    my $params = request->env;
+    my $params = request->param('contact_name');
 
     return Dumper($params);
 
 }; 
 
-get '/show_form' => sub {
+get '/delete_user' => sub {
 
+    my $remote_user = request->user;
+
+    my $cfg = new Config::Simple('../ldapnagios.cfg');
+
+    my $svn_url = $cfg->param('svn_url');    
+
+    my $local_workspace = checkout_svnurl($svn_url);
+
+    my $cfile = "$local_workspace/" . $cfg->param('configFile');
+
+    my $contacts = NagiosConfigObjects->new({
+                                              'file' => $cfile,                                        
+                                              'filter' => 'contact',
+                                            });
+     my @arr1;
+     
+    foreach my $item ( @{$contacts->get_allobjects} ) {
+
+          push @arr1, $item->{attribute};
+
+    };
+
+    my $d = Dumper(@arr1);
+
+    template 'delete_users', { 
+                               'remote_user' => $remote_user,
+                               'contacts' => \@arr1,
+                               'dumper' => $d,
+                              };
+};
+
+get '/confirm_delete' => sub {
+    my $remote_user = request->user;
+    my $todelete = request->param('contact_name');
+
+    template "confirm-contact-delete", {
+                                        'contacts' =>  $todelete,
+                                        'remote_user' => $remote_user,
+                                       };
+};
+
+get '/delete_contact_now' => sub {
+
+    my $remote_user = request->user; 
+    my $todelete = request->param('contact_name');
+
+    my $cfg = new Config::Simple('../ldapnagios.cfg');
+
+    my $svn_url = $cfg->param('svn_url');
+
+    my $local_workspace = checkout_svnurl($svn_url);
+
+    my $cfile = "$local_workspace/" . $cfg->param('configFile');
    
+    my $contacts = NagiosConfigObjects->new({
+                                              'file' => $cfile,
+                                              'filter' => 'contact',
+                                            });
 
+    if( ref($todelete)  eq  'ARRAY' ){
 
-    my %var = (
-               'contacts' => [
-                               {
-                                 'uid' => 'myuid',
-                                 'cn'  => 'mycn', 
-                                 'email' => 'myemail',
-                                 'contact_group' => 'mycontactgroup',
-                                 'contact_type'  => 'mycontacttype',
-                               },
-                               
-                               {
-                                 'uid' => 'myuid',
-                                 'cn'  => 'mycn', 
-                                 'email' => 'myemail',
-                                 'contact_group' => 'mycontactgroup',
-                                 'contact_type'  => 'mycontacttype',
-                               },
-                               
-                               {
-                                 'uid' => 'myuid',
-                                 'cn'  => 'mycn', 
-                                 'email' => 'myemail',
-                                 'contact_group' => 'mycontactgroup',
-                                 'contact_type'  => 'mycontacttype',
-                               },
+        foreach my $item ( @{$todelete}){  
+            $contacts->erase_object($item);            
+        }
 
-                             ],
+    }
+    else{
+        $contacts->erase_object($todelete)
+    }
 
-              );
+    checkin_file("$cfile");
 
-    template 'delete_users', \%var;
+    return "successfully deleted users";
+
 };
 
 
@@ -371,6 +405,20 @@ sub checkout_svnurl {
     else{
         return undef;
     }
+}
+
+sub checkin_file {
+    my  $filepath = shift;
+
+    my $client = new SVN::Client(
+               auth => [
+                    SVN::Client::get_simple_provider(),
+                    SVN::Client::get_simple_prompt_provider(\&simple_prompt,2),
+                    SVN::Client::get_username_provider()
+                ]);
+
+   $client->commit($filepath,0);
+
 }
 
 sub simple_prompt {

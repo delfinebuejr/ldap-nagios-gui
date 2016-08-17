@@ -100,7 +100,7 @@ define contact{
     alias              $cn
     contactgroups      $contactGroups
     email              $email
-}
+    }
 
 END_MESSAGE
     return $contact;

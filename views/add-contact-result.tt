@@ -1,0 +1,6 @@
+
+<br>
+<h4> <% uid %> <% isexists  %> <h4>
+<a href="/ldapnagios"><button type="submit" class="btn btn-success"> OK  </button></a>
+
+
